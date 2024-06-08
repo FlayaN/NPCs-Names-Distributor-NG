@@ -11,7 +11,7 @@
       "hidden": true,
       "cacheVariables": {
         "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
-        "CMAKE_CXX_FLAGS": "/EHsc /MP /W4 /external:anglebrackets /external:W0 $penv{CXXFLAGS}"
+        "CMAKE_CXX_FLAGS": "/EHsc /MP /W3 /external:anglebrackets /external:W0 $penv{CXXFLAGS}"
       },
       "errors": {
         "deprecated": true
@@ -24,10 +24,7 @@
     {
       "name": "vcpkg",
       "hidden": true,
-      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-      "cacheVariables": {
-        "VCPKG_OVERLAY_PORTS": "${sourceDir}/cmake/ports/"
-      }
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
     },
     {
       "name": "windows",
@@ -44,58 +41,30 @@
       "toolset": "v143"
     },
     {
-      "name": "se",
+      "name": "ng",
       "hidden": true,
       "binaryDir": "${sourceDir}/build"
     },
     {
-      "name": "ae",
-      "hidden": true,
-      "binaryDir": "${sourceDir}/buildae",
-      "cacheVariables": {
-        "BUILD_SKYRIMAE": true
-      }
-    },
-    {
-      "name": "vs2022-windows-vcpkg-se",
+      "name": "vs2022-windows-vcpkg-ng",
       "inherits": [
         "cmake-dev",
         "vcpkg",
         "windows",
         "vs2022",
-        "se"
-      ]
-    },
-    {
-      "name": "vs2022-windows-vcpkg-ae",
-      "inherits": [
-        "cmake-dev",
-        "vcpkg",
-        "windows",
-        "vs2022",
-        "ae"
+        "ng"
       ]
     }
   ],
   "buildPresets": [
     {
-      "name": "vs2022-windows-vcpkg-ae",
-      "configurePreset": "vs2022-windows-vcpkg-ae",
+      "name": "vs2022-windows-vcpkg-ng",
+      "configurePreset": "vs2022-windows-vcpkg-ng",
       "configuration": "Release"
     },
     {
-      "name": "vs2022-windows-vcpkg-se",
-      "configurePreset": "vs2022-windows-vcpkg-se",
-      "configuration": "Release"
-    },
-    {
-      "name": "vs2022-windows-vcpkg-ae-debug",
-      "configurePreset": "vs2022-windows-vcpkg-ae",
-      "configuration": "Debug"
-    },
-    {
-      "name": "vs2022-windows-vcpkg-se-debug",
-      "configurePreset": "vs2022-windows-vcpkg-se",
+      "name": "vs2022-windows-vcpkg-ng-debug",
+      "configurePreset": "vs2022-windows-vcpkg-ng",
       "configuration": "Debug"
     }
   ]

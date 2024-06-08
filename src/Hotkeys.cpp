@@ -21,7 +21,7 @@ namespace NND
 		}
 
 		void Manager::GenerateTargetTrigger(const KeyCombination*) {
-			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor.get().get()) {
+			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor->get().get()) {
 				if (const auto actor = actorRef->As<RE::Actor>()) {
 					Regenerator::RegenerateTarget(actor);
 				}
@@ -66,7 +66,7 @@ namespace NND
 		}
 
 		void Manager::FixStuckNameTrigger(const KeyCombination*) {
-			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor.get().get()) {
+			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor->get().get()) {
 				if (const auto actor = actorRef->As<RE::Actor>()) {
 					NameFixer::FixName(actor);
 				}
@@ -74,7 +74,7 @@ namespace NND
 		}
 
 		void Manager::UnsafeFixStuckNameTrigger(const KeyCombination*) {
-			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor.get().get()) {
+			if (const auto actorRef = RE::CrosshairPickData::GetSingleton()->targetActor->get().get()) {
 				if (const auto actor = actorRef->As<RE::Actor>()) {
 					NameFixer::FixNameUnsafe(actor);
 				}

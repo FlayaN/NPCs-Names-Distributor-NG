@@ -5,7 +5,6 @@
 
 #include <ClibUtil/simpleINI.hpp>
 #include <spdlog/sinks/basic_file_sink.h>
-#include <xbyak/xbyak.h>
 
 #define DLLEXPORT __declspec(dllexport)
 
@@ -31,10 +30,4 @@ namespace stl
 	}
 }
 
-#ifdef SKYRIM_AE
-#	define OFFSET(se, ae) ae
-#else
-#	define OFFSET(se, ae) se
-#endif
-
-#include "Version.h"
+#define OFFSET(se, ae) REL::Relocate(se, ae)
