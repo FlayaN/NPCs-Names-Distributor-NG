@@ -66,6 +66,11 @@ SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 
 	SKSE::Init(a_skse);
 
+	if (REL::Module::IsVR())
+	{
+		REL::IDDatabase::get().IsVRAddressLibraryAtLeastVersion("0.136.0", true);
+	}
+
 	SKSE::GetMessagingInterface()->RegisterListener(MessageHandler);
 
 	return true;

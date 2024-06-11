@@ -29,5 +29,3 @@ namespace stl
 		T::func = trampoline.write_call<5>(a_src, T::thunk);
 	}
 }
-
-#define OFFSET(se, ae) REL::Relocate(se, ae)

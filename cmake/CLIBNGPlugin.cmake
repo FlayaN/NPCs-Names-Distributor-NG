@@ -5,6 +5,7 @@ FetchContent_Declare(
   CLIBNGPlugin
   URL https://github.com/FlayaN/CommonLibSSE-NG-cmake/archive/refs/tags/${CLIBNG_PLUGIN_VERSION}.tar.gz
   FIND_PACKAGE_ARGS ${CLIBNG_PLUGIN_VERSION}
+  DOWNLOAD_EXTRACT_TIMESTAMP true
 )
 FetchContent_MakeAvailable(CLIBNGPlugin)
 # Usage:

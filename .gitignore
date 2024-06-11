@@ -1,3 +1,6 @@
 Releases/
 build*/
 .vs/
+CMakeUserPresets.json
+markdown_to_bby.py
+out

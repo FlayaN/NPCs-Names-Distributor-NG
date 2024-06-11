@@ -98,8 +98,8 @@ namespace NND
 					// lea	rcx, [rax+0D8h]
 					// mov  rax, [rcx]
 					// call qword ptr[rax + 28h]
-					REL::safe_fill(activate.address() + OFFSET(0x6B0, 0x6CF), 0x90, 13);
-					stl::write_thunk_call<Activate_GetBaseObject>(activate.address() + OFFSET(0x6AB, 0x6CA));
+					REL::safe_fill(activate.address() + REL::Relocate(0x6B0, 0x6CF), 0x90, 13);
+					stl::write_thunk_call<Activate_GetBaseObject>(activate.address() + REL::Relocate(0x6AB, 0x6CA));
 
 					logger::info("Installed Pickpocket Notification hooks");
 				}
@@ -112,21 +112,21 @@ namespace NND
 				// mov rcx, [r15+40h] (49 8B 4F 40)
 				//                     v  v  v  +
 				// mov rcx, r15       (4C 89 F9) + 90
-				REL::safe_fill(displayFullName.address() + OFFSET(0x232, 0x228), 0x4C, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x233, 0x229), 0x89, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x234, 0x22A), 0xF9, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x235, 0x22B), 0x90, 1);
-				stl::write_thunk_call<GetDisplayFullName_GetFormName>(displayFullName.address() + OFFSET(0x236, 0x22C));
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x232, 0x228), 0x4C, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x233, 0x229), 0x89, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x234, 0x22A), 0xF9, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x235, 0x22B), 0x90, 1);
+				stl::write_thunk_call<GetDisplayFullName_GetFormName>(displayFullName.address() + REL::Relocate(0x236, 0x22C));
 
 				// Swaps 2nd argument in ExtraTextDisplayData::GetDisplayName_140145820(extraTextData, object->data.objectReference, temperFactor) to pass TESObjectREFR* obj instead of obj->GetBaseObject()
 				// mov rdx, [r15+40h] (49 8B 57 40)
 				//                     v  v  v   +
 				// mov rdx, r15       (4C 89 FA) + 90
-				REL::safe_fill(displayFullName.address() + OFFSET(0x240, 0x236), 0x4C, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x241, 0x237), 0x89, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x242, 0x238), 0xFA, 1);
-				REL::safe_fill(displayFullName.address() + OFFSET(0x243, 0x239), 0x90, 1);
-				stl::write_thunk_call<GetDisplayFullName_GetDisplayName>(displayFullName.address() + OFFSET(0x247, 0x23D));
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x240, 0x236), 0x4C, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x241, 0x237), 0x89, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x242, 0x238), 0xFA, 1);
+				REL::safe_fill(displayFullName.address() + REL::Relocate(0x243, 0x239), 0x90, 1);
+				stl::write_thunk_call<GetDisplayFullName_GetDisplayName>(displayFullName.address() + REL::Relocate(0x247, 0x23D));
 
 				logger::info("Installed Default GetDisplayFullName hooks");
 
@@ -159,8 +159,8 @@ namespace NND
 
 			inline void Install() {
 				const REL::Relocation<std::uintptr_t> displayNextSubtitle{ RELOCATION_ID(51761, 52637) };
-				stl::write_thunk_call<DisplayNextSubtitle_ExtraDataList>(displayNextSubtitle.address() + OFFSET(0xEF, 0xE8));
-				stl::write_thunk_call<DisplayNextSubtitle_GetDisplayFullName>(displayNextSubtitle.address() + OFFSET(0x117, 0x110));
+				stl::write_thunk_call<DisplayNextSubtitle_ExtraDataList>(displayNextSubtitle.address() + REL::Relocate(0xEF, 0xE8));
+				stl::write_thunk_call<DisplayNextSubtitle_GetDisplayFullName>(displayNextSubtitle.address() + REL::Relocate(0x117, 0x110));
 				logger::info("Installed Subtitles hooks");
 			}
 		}
@@ -181,8 +181,8 @@ namespace NND
 
 			inline void Install() {
 				const REL::Relocation<std::uintptr_t> enemyHealthUpdate{ RELOCATION_ID(50776, 51671) };
-				stl::write_thunk_call<EnemyHealthUpdate_GetDisplayFullName>(enemyHealthUpdate.address() + OFFSET(0x21B, 0x20E));  // For Name length
-				stl::write_thunk_call<EnemyHealthUpdate_GetDisplayFullName>(enemyHealthUpdate.address() + OFFSET(0x261, 0x254));  // For actual name that will be displayed
+				stl::write_thunk_call<EnemyHealthUpdate_GetDisplayFullName>(enemyHealthUpdate.address() + REL::Relocate(0x21B, 0x20E, 0x278));  // For Name length
+				stl::write_thunk_call<EnemyHealthUpdate_GetDisplayFullName>(enemyHealthUpdate.address() + REL::Relocate(0x261, 0x254, 0x2BE));  // For actual name that will be displayed
 				logger::info("Installed EnemyHUD hooks");
 			}
 		}
@@ -227,11 +227,11 @@ namespace NND
 
 			inline void Install() {
 				const REL::Relocation<std::uintptr_t> activateText{ RELOCATION_ID(24212, 24716) };
-				stl::write_thunk_call<ActivateText_Minion_GetDisplayFullName>(activateText.address() + OFFSET(0xB3, 0xB5));
-				stl::write_thunk_call<ActivateText_Minion_GetDisplayFullName>(activateText.address() + OFFSET(0xDA, 0xDC));
+				stl::write_thunk_call<ActivateText_Minion_GetDisplayFullName>(activateText.address() + REL::Relocate(0xB3, 0xB5));
+				stl::write_thunk_call<ActivateText_Minion_GetDisplayFullName>(activateText.address() + REL::Relocate(0xDA, 0xDC));
 
-				stl::write_thunk_call<ActivateText_Search_GetDisplayFullName>(activateText.address() + OFFSET(0x23D, 0x23D));
-				stl::write_thunk_call<ActivateText_Default_GetDisplayFullName>(activateText.address() + OFFSET(0x33A, 0x33A));
+				stl::write_thunk_call<ActivateText_Search_GetDisplayFullName>(activateText.address() + REL::Relocate(0x23D, 0x23D));
+				stl::write_thunk_call<ActivateText_Default_GetDisplayFullName>(activateText.address() + REL::Relocate(0x33A, 0x33A));
 
 				logger::info("Installed Crosshair hooks");
 			}
@@ -269,10 +269,10 @@ namespace NND
 
 			inline void Install() {
 				const REL::Relocation<std::uintptr_t> dialogueMenu{ RELOCATION_ID(34455, 35282) };
-				stl::write_thunk_call<MenuTopicManager_GetDisplayFullName>(dialogueMenu.address() + OFFSET(0x4AE, 0x587));
+				stl::write_thunk_call<MenuTopicManager_GetDisplayFullName>(dialogueMenu.address() + REL::Relocate(0x4AE, 0x587, 0x4B8));
 
 				const REL::Relocation<std::uintptr_t> activateText{ RELOCATION_ID(24212, 24716) };
-				stl::write_thunk_call<ActivateText_Dialogue_GetDisplayFullName>(activateText.address() + OFFSET(0x1F2, 0x1F2));
+				stl::write_thunk_call<ActivateText_Dialogue_GetDisplayFullName>(activateText.address() + 0x1F2);
 				logger::info("Installed ActivateText hooks");
 			}
 		}
@@ -305,10 +305,10 @@ namespace NND
 
 			inline void Install() {
 				const REL::Relocation<std::uintptr_t> barterMenuInventory{ RELOCATION_ID(50012, 50956) };
-				stl::write_thunk_call<BarterMenu_GetDisplayFullName>(barterMenuInventory.address() + OFFSET(0x4B, 0x94));
+				stl::write_thunk_call<BarterMenu_GetDisplayFullName>(barterMenuInventory.address() + REL::Relocate(0x4B, 0x94));
 
 				const REL::Relocation<std::uintptr_t> containerMenu{ RELOCATION_ID(50213, 51142) };
-				stl::write_thunk_call<ContainerMenu_GetDisplayFullName>(containerMenu.address() + OFFSET(0x50, 0x99));
+				stl::write_thunk_call<ContainerMenu_GetDisplayFullName>(containerMenu.address() + REL::Relocate(0x50, 0x99));
 				logger::info("Installed Inventory hooks");
 			}
 		}
@@ -332,9 +332,9 @@ namespace NND
 				// mov rcx, [rbx+40h] (48 8B 4B 40)
 				//                           v  v
 				// mov rcx, [rbp+30h] (48 8B 4D 30)
-				REL::safe_fill(barterMenuGold.address() + OFFSET(0x20A, 0x20A), 0x4D, 1);
-				REL::safe_fill(barterMenuGold.address() + OFFSET(0x20B, 0x20B), 0x30, 1);
-				stl::write_thunk_call<BarterMenu_GetShortName>(barterMenuGold.address() + OFFSET(0x20C, 0x20C));
+				REL::safe_fill(barterMenuGold.address() + 0x20A, 0x4D, 1);
+				REL::safe_fill(barterMenuGold.address() + 0x20B, 0x30, 1);
+				stl::write_thunk_call<BarterMenu_GetShortName>(barterMenuGold.address() + 0x20C);
 			}
 		}
 
@@ -396,8 +396,8 @@ namespace NND
 
 			const REL::Relocation<std::uintptr_t> activate{ RELOCATION_ID(24211, 24715) };
 
-			stl::write_thunk_call<TESNPC_Activate_Dead_OpenInventory>(activate.address() + OFFSET(0x3D8, 0x3E7));
-			stl::write_thunk_call<TESNPC_Activate_Pickpocket_OpenInventory>(activate.address() + OFFSET(0x69E, 0x6BB));
+			stl::write_thunk_call<TESNPC_Activate_Dead_OpenInventory>(activate.address() + REL::Relocate(0x3D8, 0x3E7));
+			stl::write_thunk_call<TESNPC_Activate_Pickpocket_OpenInventory>(activate.address() + REL::Relocate(0x69E, 0x6BB));
 			logger::info("Installed OpenInventory hooks");
 		}
 	}
